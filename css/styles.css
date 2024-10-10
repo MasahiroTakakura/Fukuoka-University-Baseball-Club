@@ -1,0 +1,115 @@
+:root {
+  --enji: #8f1d21;
+  --enji-light: #a82428;
+  --enji-dark: #6d1619;
+}
+
+body {
+  color: #333;
+  padding-top: 56px;
+}
+
+.navbar {
+  background-color: var(--enji) !important;
+}
+
+.navbar-light .navbar-brand,
+.navbar-light .navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.jumbotron {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  color: var(--enji);
+  border-bottom: 2px solid var(--enji);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: var(--enji);
+  border-color: var(--enji);
+}
+
+.btn-primary:hover {
+  background-color: var(--enji-dark);
+  border-color: var(--enji-dark);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(143, 29, 33, 0.05);
+}
+
+footer {
+  background-color: var(--enji) !important;
+  color: white;
+}
+
+.sidebar {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-right: 1px solid #dee2e6;
+}
+
+.sidebar h3 {
+  color: var(--enji);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background-color: var(--enji);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.sidebar ul li a:hover {
+  background-color: var(--enji-dark);
+  transform: scale(1.05);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+      border-right: none;
+      border-bottom: 1px solid #dee2e6;
+      margin-bottom: 20px;
+  }
+}
