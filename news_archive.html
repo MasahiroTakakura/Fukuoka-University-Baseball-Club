@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ一覧 - 福岡大学野球部</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header"></div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-9">
+                <h1 class="display-4 mb-4">お知らせ一覧</h1>
+
+                <ul id="news-list" class="list-group mb-5">
+                    <!-- 動的にニュース項目が追加されます -->
+                </ul>
+
+                <div class="d-grid gap-2">
+                    <button id="load-more" class="btn btn-primary" style="display: none;">次のページへ</button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div id="sidebar"></div> <!-- サイドバーの読み込み -->
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function() {
+            // ヘッダー、サイドバー、フッターの読み込み
+            $("#header").load("header.html");
+            $("#sidebar").load("sidebar.html");
+            $("#footer").load("footer.html");
+
+            // Contentfulの設定
+            const spaceId = '95acbb1g16x0';
+            const accessToken = '--zeTa47y-bnIMlvSmLl5eblzcVkzpGFPNHxmK34V7Q';
+            const limit = 10; // 1ページあたりの記事数
+            let skip = 0; // 現在のオフセット
+
+            // 初期ロード
+            loadNews();
+
+            // 「次のページへ」ボタンのイベントリスナー
+            $('#load-more').on('click', function() {
+                skip += limit;
+                loadNews();
+            });
+
+            // ニュース項目を取得して表示する関数
+            function loadNews() {
+                const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${accessToken}&content_type=news&order=-fields.date&limit=${limit}&skip=${skip}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const newsList = document.getElementById('news-list');
+
+                        data.items.forEach(item => {
+                            const newsItem = document.createElement('li');
+                            newsItem.className = 'list-group-item';
+
+                            newsItem.innerHTML = `
+                                <a href="news_detail.html?id=${item.sys.id}" class="news-link">
+                                    ${item.fields.title}
+                                </a>
+                                <p class="text-muted">投稿日: ${item.fields.date}</p>
+                            `;
+                            newsList.appendChild(newsItem);
+                        });
+
+                        // 「次のページへ」ボタンの表示制御
+                        if (data.total > skip + limit) {
+                            $('#load-more').show();
+                        } else {
+                            $('#load-more').hide();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('news-list').innerHTML = `<p class="text-danger">ニュースの読み込みに失敗しました。</p>`;
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
